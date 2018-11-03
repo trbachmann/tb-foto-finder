@@ -6,4 +6,57 @@
 
 body {
   font-family: 'Open Sans', 'Font Awesome\ 5 Free', sans-serif;
+  background-color: #C2B2B4;
+}
+
+nav {
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  background-color: #3E2A35;
+
+}
+
+h1 {
+  margin-left: 2%;
+}
+
+.foto-logo {
+  height: .85em;
+}
+
+.search-bar-contain {
+  display: flex;
+  height: 2em;
+  margin: auto 2% auto 0;
+  border: 0;
+}
+
+.search-input {
+  border: 2px solid #C2B2B4;
+  border-radius: 4px 0 0 4px;
+  flex: 1;
+  padding-left: 4%;
+}
+
+.search-btn {
+  background-color: #C2B2B4; 
+  border: 1px solid #C2B2B4;
+  border-radius: 0 4px 4px 0;
+  color: white;
+}
+
+header {
+  background-color: #3E2A35;
+  color: white;
+  display: grid;
+
+}
+
+form {
+  margin: auto;
+}
+
+label, input {
+  display: block;
 }
