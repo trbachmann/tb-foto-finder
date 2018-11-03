@@ -6,4 +6,99 @@
 
 body {
   font-family: 'Open Sans', 'Font Awesome\ 5 Free', sans-serif;
+  background-color: #C2B2B4;
+}
+
+nav {
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  background-color: #3E2A35;
+
+}
+
+h1 {
+  margin-left: 2%;
+}
+
+.foto-logo {
+  height: .85em;
+}
+
+.search-bar-contain {
+  display: flex;
+  height: 2em;
+  margin: auto 2% auto 0;
+  border: 0;
+}
+
+.search-input {
+  border: 2px solid #C2B2B4;
+  border-radius: 4px 0 0 4px;
+  flex: 1;
+  height: 2em;
+  padding-left: 4%;
+}
+
+.search-btn {
+  background-color: #C2B2B4; 
+  border: 1px solid #C2B2B4;
+  border-radius: 0 4px 4px 0;
+  color: white;
+}
+
+header {
+  background-color: #3E2A35;
+  color: white;
+  display: flex;
+
+}
+
+form {
+  margin: auto;
+  width: 50%;
+}
+
+label, input {
+  color: #C2B2B4;
+  display: block;
+  font-size: 1.1em;
+  width: 100%;
+}
+
+label {
+  margin: 3% 0 2% 0;
+}
+
+input {
+  height: 2.5em;
+}
+
+.file-input {
+  display: none;
+}
+
+.album-btn-contain {
+  display: flex;
+  justify-content: space-between;
+}
+
+.album-btns,
+.file-upload-btn {
+  background-color: #5b4447;
+  border: 0;
+  color: white;
+  font-size: 1.1em;
+  margin: 6% 0;
+  padding: 2.5% 10%;
+  text-align: center;
+}
+
+.file-upload-btn {
+  margin: 6% 0 0 0;
+}
+
+main {
+  display: flex;
+  flex-wrap: wrap;
 }
