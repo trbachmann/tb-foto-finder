@@ -140,7 +140,7 @@ p {
 }
 
 .fit-image {
-  object-fit: scale-down;
+  object-fit: contain;
   width: 100%;
 }
 
@@ -172,6 +172,6 @@ p {
   background: url(images/delete-active.svg);
 }
 
-.favorite-btn-active {
+.favorite-btntrue {
   background: url(images/favorite-active.svg);
 }
