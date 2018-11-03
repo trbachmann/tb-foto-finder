@@ -1,6 +1,7 @@
 var albumArray = [];
 var titleInput = document.querySelector('.js-title-input');
 var captionInput = document.querySelector('.js-caption-input');
+var favCounter = 0;
 
 
 document.querySelector('.js-add-to-album').addEventListener('click', createNewFoto);
@@ -23,6 +24,14 @@ function createNewFoto(event) {
 }
 
 function deleteFoto() {
+  var fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
+
+  albumArray = albumArray.filter(function(foto) {
+    if (foto.id !== fotoId) {
+      return foto;
+    }
+  });
+
   event.target.closest('.js-foto').remove();
 }
 
@@ -35,6 +44,9 @@ function favoriteFoto() {
     }
 
   })
+
+  event.target.closest('.js-fav-btn').classList.add('favorite-btntrue');
+
 }
 
 function fotoEventChecker() {
@@ -58,9 +70,13 @@ function postToPage(fotoObj) {
         <article class="image-btns-contain">
           <button class="delete-btn js-delete-btn">
           </button>
-          <button class="favorite-btn favorite-btn${fotoObj.favorite} js-fav-btn">
+          <button class="favorite-btn js-fav-btn">
           </button>
         </article>
       </section>`
   );
+
+  if (fotoObj.favorite) {
+    event.target.classList.add('favorite-btn-active');
+  }
 }
