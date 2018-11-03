@@ -75,7 +75,12 @@ label {
 }
 
 .file-input {
-  display: none;
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
 }
 
 .album-btns-contain {
@@ -95,7 +100,8 @@ label {
 }
 
 .file-upload-btn {
-  margin: 6% 0 0 0;
+  margin: 6% 0 0 0;  
+  cursor: pointer;
 }
 
 .album-btns {
