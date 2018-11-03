@@ -19,13 +19,16 @@
   </nav>
   <header>
     <form action="">
-      <label for="title">Title</label>
-      <input type="text">
-      <label for="caption">Caption</label>
-      <input type="text">
-      <button>Choose File</button>
-      <button>View # Favorites</button>
-      <button>Add to Album</button>
+      <label for="title-input">Title</label>
+      <input type="text" id="title-input">
+      <label for="caption-input">Caption</label>
+      <input type="text" id="caption-input">
+      <label class="file-upload-btn" for="file-upload">Choose File</label>
+      <input class="file-input" type="file" id="file-upload" accept=".png, .jpg, .jpeg">
+      <section class="album-btn-contain">
+        <button class="album-btns">View # Favorites</button>
+        <button class="album-btns">Add to Album</button>
+      </section>
     </form>
   </header>
   <main>
