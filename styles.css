@@ -36,7 +36,6 @@ h1 {
   border: 2px solid #C2B2B4;
   border-radius: 4px 0 0 4px;
   flex: 1;
-  height: 2em;
   padding-left: 4%;
 }
 
@@ -70,7 +69,8 @@ label {
   margin: 3% 0 2% 0;
 }
 
-input {
+.title-input,
+.caption-input {
   height: 2.5em;
 }
 
@@ -78,7 +78,7 @@ input {
   display: none;
 }
 
-.album-btn-contain {
+.album-btns-contain {
   display: flex;
   justify-content: space-between;
 }
@@ -98,7 +98,58 @@ input {
   margin: 6% 0 0 0;
 }
 
+.album-btns:hover,
+.file-upload-btn:hover {
+  background-color: #938284;
+}
+
 main {
   display: flex;
+  justify-content: space-around;
+}
+
+.album {
+  display: flex;
   flex-wrap: wrap;
+  width: 98%;
+  margin: 3% 3%;
+}
+
+.image-contain {
+  background-color: white;
+  border: 1.5px solid #5b4447;
+  color: #3E2A35;
+  width: 290px;
+  margin: 1.5% 1.5%;
+}
+
+p {
+  margin: 4%;
+  font-weight: 600;
+}
+
+.image-btns-contain {
+  background-color: #5B4447;
+  display: flex;
+  justify-content: space-between;
+}
+
+.delete-btn {
+  background: url(images/delete.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: 0;
+  height: 35px;
+  margin: 4%;
+  width: 35px;
+}
+
+.favorite-btn {
+  background: url(images/favorite.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: 0;
+  height: 35px;
+  margin: 4%;
+  width: 35px;
 }
