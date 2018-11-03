@@ -90,12 +90,16 @@ label {
   color: white;
   font-size: 1.1em;
   margin: 6% 0;
-  padding: 2.5% 10%;
+  padding: 2.5% 3%;
   text-align: center;
 }
 
 .file-upload-btn {
   margin: 6% 0 0 0;
+}
+
+.album-btns {
+  width: 40%;
 }
 
 .album-btns:hover,
@@ -117,7 +121,7 @@ main {
 
 .image-contain {
   background-color: white;
-  border: 1.5px solid #5b4447;
+  border: 1px solid #5b4447;
   color: #3E2A35;
   width: 290px;
   margin: 1.5% 1.5%;
@@ -125,7 +129,13 @@ main {
 
 p {
   margin: 4%;
+  font-size: 1.15em;
   font-weight: 600;
+}
+
+.fit-image {
+  object-fit: scale-down;
+  width: 100%;
 }
 
 .image-btns-contain {
@@ -136,6 +146,14 @@ p {
 
 .delete-btn {
   background: url(images/delete.svg);
+}
+
+.favorite-btn {
+  background: url(images/favorite.svg);
+}
+
+.favorite-btn, 
+.delete-btn {
   background-repeat: no-repeat;
   background-size: contain;
   border: 0;
@@ -144,12 +162,10 @@ p {
   width: 35px;
 }
 
-.favorite-btn {
-  background: url(images/favorite.svg);
-  background-repeat: no-repeat;
-  background-size: contain;
-  border: 0;
-  height: 35px;
-  margin: 4%;
-  width: 35px;
+.delete-btn:hover {
+  background: url(images/delete-active.svg);
+}
+
+.favorite-btn-active {
+  background: url(images/favorite-active.svg);
 }
