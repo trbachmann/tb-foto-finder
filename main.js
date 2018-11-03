@@ -63,9 +63,7 @@ function postToPage(fotoObj) {
   document.querySelector('.js-album').insertAdjacentHTML('afterbegin', 
     `<section data-fotoid="${fotoObj.id}" class="image-contain js-foto">
         <p>${fotoObj.title}</p>
-        <article class="image-only-contain">
-          <img class="fit-image" src="${fotoObj.file}" alt="">
-        </article>
+        <img class="fit-image" src="${fotoObj.file}" alt="">
         <p>${fotoObj.caption}</p>
         <article class="image-btns-contain">
           <button class="delete-btn js-delete-btn">

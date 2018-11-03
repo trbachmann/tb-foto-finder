@@ -7,8 +7,8 @@ class Photo {
     this.favorite = false;
   }
 
-  saveToStorage() {
-
+  saveToStorage(arrayToStore) {
+    
   }
 
   deleteFromStorage() {
