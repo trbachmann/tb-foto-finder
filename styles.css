@@ -172,6 +172,7 @@ p {
   background: url(images/delete-active.svg);
 }
 
-.favorite-btntrue {
+.favorite-btn-active {
   background: url(images/favorite-active.svg);
+  background-repeat: no-repeat;
 }
