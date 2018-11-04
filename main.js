@@ -46,22 +46,17 @@ function deleteFoto() {
 }
 
 function favoriteFoto() {
-  console.log('clicked the heart');
   var fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
   
   albumArray.forEach(function(foto) {
+    
     if (foto.id === fotoId) {
-      console.log('made it inside the foreach');
       foto.favorite = !foto.favorite;
       foto.updatePhoto(foto.title, foto.caption, foto.favorite)
       foto.saveToStorage(albumArray);
-      // event.target.closest('.js-fav-btn').classList.remove('favorite-btn-active');
       event.target.classList.replace(`favorite-btn-${!foto.favorite}`, `favorite-btn-${foto.favorite}`);
     }
-
   });
-
-
 }
 
 function fotoEventChecker() {
