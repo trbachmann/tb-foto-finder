@@ -1,6 +1,4 @@
-
 var albumArray = [];
-// var favCounter = 0;
 
 checkForStorage();
 
@@ -50,7 +48,7 @@ function deleteFoto() {
 function favoriteFoto() {
   var fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
   
-  albumArray.forEach(function(foto){
+  albumArray.forEach(function(foto) {
     if (foto.id === fotoId) {
       foto.favorite = true;
     }
@@ -102,9 +100,9 @@ function postToPage(fotoObj) {
 }
 
 function repopulateDom() {
-  var newthing = JSON.parse((localStorage.getItem('userphotos')));
+  var jsonUserPhotoArray = JSON.parse((localStorage.getItem('userphotos')));
 
-  newthing.forEach(function(jsonObj) {
+  jsonUserPhotoArray.forEach(function(jsonObj) {
     var foto = new Photo(jsonObj.title, jsonObj.caption, jsonObj.file, jsonObj.id, jsonObj.favorite);
     postToPage(foto);
     albumArray.push(foto);
