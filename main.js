@@ -1,10 +1,21 @@
 var albumArray = [];
+var favCounter = 0;
 
 checkForStorage();
 
 document.querySelector('.js-add-to-album').addEventListener('click', createNewFoto);
 document.querySelector('.js-album').addEventListener('click', fotoEventChecker);
 document.querySelector('.js-album').addEventListener('focusout', getEdits);
+
+function changeFavCounter(fotoObj) {
+  if (fotoObj.favorite) {
+    favCounter++;
+  } else if (favCounter !== 0) {
+    favCounter--;
+  }
+  
+  document.querySelector('.js-num-of-favs').innerHTML = favCounter;
+}
 
 function checkForStorage() {
   if (localStorage.length !== 0) {
@@ -55,6 +66,7 @@ function favoriteFoto() {
       foto.updatePhoto(foto.title, foto.caption, foto.favorite)
       foto.saveToStorage(albumArray);
       event.target.classList.replace(`favorite-btn-${!foto.favorite}`, `favorite-btn-${foto.favorite}`);
+      changeFavCounter(foto);
     }
   });
 }
@@ -102,6 +114,7 @@ function repopulateDom() {
     var foto = new Photo(jsonObj.title, jsonObj.caption, jsonObj.file, jsonObj.id, jsonObj.favorite);
     postToPage(foto);
     albumArray.push(foto);
+    changeFavCounter(foto);
   });
 }
 
