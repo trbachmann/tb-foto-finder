@@ -3,6 +3,7 @@ var titleInput = document.querySelector('.js-title-input');
 var captionInput = document.querySelector('.js-caption-input');
 var favCounter = 0;
 
+checkForStorage();
 
 document.querySelector('.js-add-to-album').addEventListener('click', createNewFoto);
 document.querySelector('.js-album').addEventListener('click', fotoEventChecker);
@@ -20,6 +21,7 @@ function createNewFoto(event) {
   var foto = new Photo(titleInput.value, captionInput.value, fotoFile);
   postToPage(foto);
   albumArray.push(foto);
+  foto.saveToStorage(albumArray);
   clearInputFields();
 }
 
@@ -78,3 +80,28 @@ function postToPage(fotoObj) {
     event.target.classList.add('favorite-btn-active');
   }
 }
+
+function checkForStorage() {
+  if (localStorage.length !== 0) {
+    repopulateDom();
+  } else {
+    return;
+  }
+
+}
+
+function repopulateDom() {
+  var newthing = JSON.parse((localStorage.getItem('userphotos')));
+
+  newthing.forEach(function(jsonObj) {
+    var foto = new Photo(jsonObj.title, jsonObj.caption, jsonObj.file, jsonObj.id, jsonObj.favorite);
+    postToPage(foto);
+    albumArray.push(foto);
+  });
+}
+
+
+
+
+
+
