@@ -1,61 +1,10 @@
-
 var albumArray = [];
-// var favCounter = 0;
 
 checkForStorage();
 
 document.querySelector('.js-add-to-album').addEventListener('click', createNewFoto);
 document.querySelector('.js-album').addEventListener('click', fotoEventChecker);
-
-function retrieveInput(whichInput) {
-  if (whichInput === 'title') {
-    return document.querySelector('.js-title-input');
-  } else if (whichInput === 'caption') {
-    return document.querySelector('.js-caption-input');
-  } else if (whichInput === 'imgFile') {
-    return document.querySelector('.js-file-input').files[0];
-  } else {
-    return document.querySelector('.js-search-input');
-  }
-}
-// document.querySelector('.js-album').addEventListener('focusout', takeEdits);
-
-// function takeEdits(event) {
-//   var fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
-
-//   if (event.target.classList.contains('js-title')) {
-//     var newTitle = event.target.innerHTML;
-//     var newCaption = event.target.nextElementSibling.nextElementSibling.innerHTML;
-
-//     albumArray = albumArray.filter(function(foto) {
-//     if (foto.id === fotoId) {
-//       foto.title = newTitle;
-//       foto.caption = newCaption;
-//       console.log('Foto title is: ' + foto.title);
-//       console.log('Foto caption is: ' + foto.caption);
-//     }
-
-//     });
-//   }
-
-//   if (event.target.classList.contains('js-caption')) {
-//     var newCaption = event.target.innerHTML;
-//     var newTitle = event.target.previousElementSibling.previousElementSibling.innerHTML;
-
-    
-//     albumArray = albumArray.filter(function(foto) {
-//     if (foto.id === fotoId) {
-//       foto.title = newTitle;
-//       foto.caption = newCaption;
-//       console.log('Foto title is: ' + foto.title);
-//       console.log('Foto caption is: ' + foto.caption);
-//     }
-
-//     });
-//   }
-
-
-// }
+document.querySelector('.js-album').addEventListener('focusout', getEdits);
 
 function checkForStorage() {
   if (localStorage.length !== 0) {
@@ -70,7 +19,6 @@ function clearInputFields() {
 
 function createNewFoto(event) {
   event.preventDefault();
-
   // var fileBlob = document.querySelector('.js-file-input').files[0];
   var reader = new FileReader();
 
@@ -100,7 +48,7 @@ function deleteFoto() {
 function favoriteFoto() {
   var fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
   
-  albumArray.forEach(function(foto){
+  albumArray.forEach(function(foto) {
     if (foto.id === fotoId) {
       foto.favorite = true;
     }
@@ -119,7 +67,16 @@ function fotoEventChecker() {
   if (event.target.classList.contains('js-fav-btn')) {
     favoriteFoto();
   }
+}
 
+function getEdits(event) {
+  if (event.target.classList.contains('js-title')) {
+    updateTitle();
+  }
+
+  if (event.target.classList.contains('js-caption')) {
+    updateCaption();
+  }
 }
 
 function postToPage(fotoObj) {
@@ -143,11 +100,45 @@ function postToPage(fotoObj) {
 }
 
 function repopulateDom() {
-  var newthing = JSON.parse((localStorage.getItem('userphotos')));
+  var jsonUserPhotoArray = JSON.parse((localStorage.getItem('userphotos')));
 
-  newthing.forEach(function(jsonObj) {
+  jsonUserPhotoArray.forEach(function(jsonObj) {
     var foto = new Photo(jsonObj.title, jsonObj.caption, jsonObj.file, jsonObj.id, jsonObj.favorite);
     postToPage(foto);
     albumArray.push(foto);
   });
+}
+
+function retrieveInput(whichInput) {
+  if (whichInput === 'title') {
+    return document.querySelector('.js-title-input');
+  } else if (whichInput === 'caption') {
+    return document.querySelector('.js-caption-input');
+  } else if (whichInput === 'imgFile') {
+    return document.querySelector('.js-file-input').files[0];
+  } else {
+    return document.querySelector('.js-search-input');
+  }
+}
+
+function updateCaption() {
+  var fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
+
+  albumArray.forEach(function(foto) {
+    if (foto.id === fotoId) {
+      foto.updatePhoto(event.target.previousElementSibling.previousElementSibling.innerHTML, event.target.innerHTML)
+      foto.saveToStorage(albumArray);
+    }
+  });
+}
+
+function updateTitle() {
+  var fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
+
+    albumArray.forEach(function(foto) {
+      if (foto.id === fotoId) {
+        foto.updatePhoto(event.target.innerHTML, event.target.nextElementSibling.nextElementSibling.innerHTML)
+        foto.saveToStorage(albumArray);
+      }
+    });
 }

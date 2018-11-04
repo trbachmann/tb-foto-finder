@@ -22,8 +22,9 @@ class Photo {
     this.saveToStorage(albumArray);
   }
 
-  updatePhoto() {
-    
+  updatePhoto(title, caption) {
+    this.title = title;
+    this.caption = caption;
   }
 
 
