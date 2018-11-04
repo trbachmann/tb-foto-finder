@@ -12,11 +12,19 @@ class Photo {
     localStorage.setItem('userphotos', stringedAlbumArray);
   }
 
-  deleteFromStorage() {
-
+  deleteFromStorage(fotoId) {
+    albumArray = albumArray.filter(function(fotoInst) {
+      if (fotoInst.id !== fotoId) {
+        return fotoInst;
+      }
+    });
+    
+    this.saveToStorage(albumArray);
   }
 
   updatePhoto() {
 
   }
+
+
 }
