@@ -46,16 +46,21 @@ function deleteFoto() {
 }
 
 function favoriteFoto() {
+  console.log('clicked the heart');
   var fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
   
   albumArray.forEach(function(foto) {
     if (foto.id === fotoId) {
-      foto.favorite = true;
+      console.log('made it inside the foreach');
+      foto.favorite = !foto.favorite;
+      foto.updatePhoto(foto.title, foto.caption, foto.favorite)
+      foto.saveToStorage(albumArray);
+      // event.target.closest('.js-fav-btn').classList.remove('favorite-btn-active');
+      event.target.classList.replace(`favorite-btn-${!foto.favorite}`, `favorite-btn-${foto.favorite}`);
     }
 
-  })
+  });
 
-  event.target.closest('.js-fav-btn').classList.add('favorite-btntrue');
 
 }
 
@@ -88,15 +93,11 @@ function postToPage(fotoObj) {
       <article class="image-btns-contain">
       <button class="delete-btn js-delete-btn">
       </button>
-      <button class="favorite-btn js-fav-btn">
+      <button class="fav-btn favorite-btn-${fotoObj.favorite} js-fav-btn">
       </button>
       </article>
       </section>`
       );
-
-    if (fotoObj.favorite) {
-      event.target.classList.add('favorite-btn-active');
-    }
 }
 
 function repopulateDom() {
@@ -126,7 +127,7 @@ function updateCaption() {
 
   albumArray.forEach(function(foto) {
     if (foto.id === fotoId) {
-      foto.updatePhoto(event.target.previousElementSibling.previousElementSibling.innerHTML, event.target.innerHTML)
+      foto.updatePhoto(event.target.previousElementSibling.previousElementSibling.innerHTML, event.target.innerHTML, foto.favorite)
       foto.saveToStorage(albumArray);
     }
   });
@@ -137,7 +138,7 @@ function updateTitle() {
 
     albumArray.forEach(function(foto) {
       if (foto.id === fotoId) {
-        foto.updatePhoto(event.target.innerHTML, event.target.nextElementSibling.nextElementSibling.innerHTML)
+        foto.updatePhoto(event.target.innerHTML, event.target.nextElementSibling.nextElementSibling.innerHTML, foto.favorite)
         foto.saveToStorage(albumArray);
       }
     });
