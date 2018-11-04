@@ -17,6 +17,14 @@ function changeFavCounter(fotoObj) {
   document.querySelector('.js-num-of-favs').innerHTML = favCounter;
 }
 
+function repopulateFavCounter(fotoObj) {
+  if (fotoObj.favorite) {
+    favCounter++;
+  }
+
+  document.querySelector('.js-num-of-favs').innerHTML = favCounter;
+}
+
 function checkForStorage() {
   if (localStorage.length !== 0) {
     repopulateDom();
@@ -114,7 +122,7 @@ function repopulateDom() {
     var foto = new Photo(jsonObj.title, jsonObj.caption, jsonObj.file, jsonObj.id, jsonObj.favorite);
     postToPage(foto);
     albumArray.push(foto);
-    changeFavCounter(foto);
+    repopulateFavCounter(foto);
   });
 }
 
