@@ -28,7 +28,6 @@ function createNewFoto(event) {
   var reader = new FileReader();
 
   reader.addEventListener("loadend", function() {
-    console.log(reader.result);
     var foto = new Photo(titleInput.value, captionInput.value, reader.result);
     postToPage(foto);
     albumArray.push(foto);
