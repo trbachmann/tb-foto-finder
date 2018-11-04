@@ -140,6 +140,7 @@ p {
   margin: 4%;
   font-size: 1.15em;
   font-weight: 600;
+  /*trying using --> in combo with max height try overflow: scroll;*/
 }
 
 .fit-image {
