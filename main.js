@@ -1,3 +1,4 @@
+
 var albumArray = [];
 var titleInput = document.querySelector('.js-title-input');
 var captionInput = document.querySelector('.js-caption-input');
@@ -8,6 +9,12 @@ checkForStorage();
 document.querySelector('.js-add-to-album').addEventListener('click', createNewFoto);
 document.querySelector('.js-album').addEventListener('click', fotoEventChecker);
 
+function checkForStorage() {
+  if (localStorage.length !== 0) {
+    repopulateDom();
+  }
+}
+
 function clearInputFields() {
   titleInput.value = '';
   captionInput.value = '';
@@ -16,21 +23,28 @@ function clearInputFields() {
 function createNewFoto(event) {
   event.preventDefault();
 
-  var fotoFile = URL.createObjectURL(document.querySelector('.js-file-input').files[0]);
+  var fileBlob = document.querySelector('.js-file-input').files[0];
 
-  var foto = new Photo(titleInput.value, captionInput.value, fotoFile);
-  postToPage(foto);
-  albumArray.push(foto);
-  foto.saveToStorage(albumArray);
-  clearInputFields();
+  var reader = new FileReader();
+
+  reader.addEventListener("loadend", function() {
+    console.log(reader.result);
+    var foto = new Photo(titleInput.value, captionInput.value, reader.result);
+    postToPage(foto);
+    albumArray.push(foto);
+    foto.saveToStorage(albumArray);
+    clearInputFields();
+  });
+  reader.readAsDataURL(fileBlob);
+
 }
 
 function deleteFoto() {
   var fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
 
   albumArray = albumArray.filter(function(foto) {
-    if (foto.id !== fotoId) {
-      return foto;
+    if (foto.id === fotoId) {
+      foto.deleteFromStorage(fotoId);
     }
   });
 
@@ -62,32 +76,23 @@ function fotoEventChecker() {
 }
 
 function postToPage(fotoObj) {
-  document.querySelector('.js-album').insertAdjacentHTML('afterbegin', 
-    `<section data-fotoid="${fotoObj.id}" class="image-contain js-foto">
-        <p>${fotoObj.title}</p>
-        <img class="fit-image" src="${fotoObj.file}" alt="">
-        <p>${fotoObj.caption}</p>
-        <article class="image-btns-contain">
-          <button class="delete-btn js-delete-btn">
-          </button>
-          <button class="favorite-btn js-fav-btn">
-          </button>
-        </article>
+    document.querySelector('.js-album').insertAdjacentHTML('afterbegin', 
+      `<section data-fotoid="${fotoObj.id}" class="image-contain js-foto">
+      <p>${fotoObj.title}</p>
+      <img class="fit-image" src="${fotoObj.file}" alt="">
+      <p>${fotoObj.caption}</p>
+      <article class="image-btns-contain">
+      <button class="delete-btn js-delete-btn">
+      </button>
+      <button class="favorite-btn js-fav-btn">
+      </button>
+      </article>
       </section>`
-  );
+      );
 
-  if (fotoObj.favorite) {
-    event.target.classList.add('favorite-btn-active');
-  }
-}
-
-function checkForStorage() {
-  if (localStorage.length !== 0) {
-    repopulateDom();
-  } else {
-    return;
-  }
-
+    if (fotoObj.favorite) {
+      event.target.classList.add('favorite-btn-active');
+    }
 }
 
 function repopulateDom() {
@@ -99,9 +104,3 @@ function repopulateDom() {
     albumArray.push(foto);
   });
 }
-
-
-
-
-
-
