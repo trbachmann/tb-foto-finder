@@ -1,10 +1,21 @@
 var albumArray = [];
+var favCounter = 0;
 
 checkForStorage();
 
 document.querySelector('.js-add-to-album').addEventListener('click', createNewFoto);
 document.querySelector('.js-album').addEventListener('click', fotoEventChecker);
 document.querySelector('.js-album').addEventListener('focusout', getEdits);
+
+function changeFavCounter(fotoObj) {
+  if (fotoObj.favorite) {
+    favCounter++;
+  } else if (favCounter !== 0) {
+    favCounter--;
+  }
+  
+  document.querySelector('.js-num-of-favs').innerHTML = favCounter;
+}
 
 function checkForStorage() {
   if (localStorage.length !== 0) {
@@ -49,14 +60,15 @@ function favoriteFoto() {
   var fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
   
   albumArray.forEach(function(foto) {
+    
     if (foto.id === fotoId) {
-      foto.favorite = true;
+      foto.favorite = !foto.favorite;
+      foto.updatePhoto(foto.title, foto.caption, foto.favorite)
+      foto.saveToStorage(albumArray);
+      event.target.classList.replace(`favorite-btn-${!foto.favorite}`, `favorite-btn-${foto.favorite}`);
+      changeFavCounter(foto);
     }
-
-  })
-
-  event.target.closest('.js-fav-btn').classList.add('favorite-btntrue');
-
+  });
 }
 
 function fotoEventChecker() {
@@ -88,15 +100,11 @@ function postToPage(fotoObj) {
       <article class="image-btns-contain">
       <button class="delete-btn js-delete-btn">
       </button>
-      <button class="favorite-btn js-fav-btn">
+      <button class="fav-btn favorite-btn-${fotoObj.favorite} js-fav-btn">
       </button>
       </article>
       </section>`
       );
-
-    if (fotoObj.favorite) {
-      event.target.classList.add('favorite-btn-active');
-    }
 }
 
 function repopulateDom() {
@@ -106,6 +114,7 @@ function repopulateDom() {
     var foto = new Photo(jsonObj.title, jsonObj.caption, jsonObj.file, jsonObj.id, jsonObj.favorite);
     postToPage(foto);
     albumArray.push(foto);
+    changeFavCounter(foto);
   });
 }
 
@@ -126,7 +135,7 @@ function updateCaption() {
 
   albumArray.forEach(function(foto) {
     if (foto.id === fotoId) {
-      foto.updatePhoto(event.target.previousElementSibling.previousElementSibling.innerHTML, event.target.innerHTML)
+      foto.updatePhoto(event.target.previousElementSibling.previousElementSibling.innerHTML, event.target.innerHTML, foto.favorite)
       foto.saveToStorage(albumArray);
     }
   });
@@ -137,7 +146,7 @@ function updateTitle() {
 
     albumArray.forEach(function(foto) {
       if (foto.id === fotoId) {
-        foto.updatePhoto(event.target.innerHTML, event.target.nextElementSibling.nextElementSibling.innerHTML)
+        foto.updatePhoto(event.target.innerHTML, event.target.nextElementSibling.nextElementSibling.innerHTML, foto.favorite)
         foto.saveToStorage(albumArray);
       }
     });

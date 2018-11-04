@@ -159,11 +159,11 @@ p {
   background: url(images/delete.svg);
 }
 
-.favorite-btn {
+.favorite-btn-false {
   background: url(images/favorite.svg);
 }
 
-.favorite-btn, 
+.fav-btn, 
 .delete-btn {
   background-repeat: no-repeat;
   background-size: contain;
@@ -177,7 +177,7 @@ p {
   background: url(images/delete-active.svg);
 }
 
-.favorite-btn-active {
+.favorite-btn-true {
   background: url(images/favorite-active.svg);
   background-repeat: no-repeat;
 }
