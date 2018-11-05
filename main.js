@@ -6,9 +6,9 @@ checkForStorage();
 document.querySelector('.js-add-to-album').addEventListener('click', createNewFoto);
 document.querySelector('.js-album').addEventListener('click', fotoEventChecker);
 document.querySelector('.js-album').addEventListener('focusout', getEdits);
+document.querySelector('.js-file-input').addEventListener('change', canEnable);
 retrieveInput('title').addEventListener('input', canEnable);
 retrieveInput('caption').addEventListener('input', canEnable);
-document.querySelector('.js-file-input').addEventListener('change', canEnable);
 
 function canEnable() {
   if (!retrieveInput('title').value || !retrieveInput('caption').value || !document.querySelector('.js-file-input').value ) {
@@ -31,6 +31,7 @@ function changeFavCounter(fotoObj) {
 function checkForStorage() {
   if (localStorage.length !== 0) {
     repopulateDom();
+    //put a child html element in 'js-album' that says "add photos"
   }
 }
 
@@ -67,6 +68,8 @@ function deleteFoto() {
   });
 
   event.target.closest('.js-foto').remove();
+  //if the .childElementCount of 'js-album' is 0, 
+  // then put a child html element in 'js-album' that says "add photos"
 }
 
 function favoriteFoto() {
@@ -105,6 +108,8 @@ function getEdits(event) {
 }
 
 function postToPage(fotoObj) {
+  //if '.js-album' has a first child
+  // and that child strictly equals an element that says "add photo", remove it
     document.querySelector('.js-album').insertAdjacentHTML('afterbegin', 
       `<section data-fotoid="${fotoObj.id}" class="image-contain js-foto">
       <p class="js-title" contenteditable="true">${fotoObj.title}</p>

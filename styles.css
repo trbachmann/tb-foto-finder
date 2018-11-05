@@ -129,6 +129,10 @@ main {
   padding-left: 5%;
 }
 
+h2 {
+  color: white;
+}
+
 .album {
   display: flex;
   flex-wrap: wrap;
