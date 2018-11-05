@@ -111,8 +111,16 @@ label {
   width: 40%;
 }
 
-.album-btns:hover,
+.add-to-album:disabled {
+  filter: grayscale(40%);
+}
+
+.view-favs-btn:hover,
 .file-upload-btn:hover {
+  background-color: #938284;
+}
+
+.add-to-album:hover:enable {
   background-color: #938284;
 }
 
@@ -183,6 +191,10 @@ p {
 .favorite-btn-true {
   background: url(images/favorite-active.svg);
   background-repeat: no-repeat;
+}
+
+.hidden {
+  display: none;
 }
 
 /*MEDIA QUERIES*/
