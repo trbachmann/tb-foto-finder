@@ -6,8 +6,17 @@ checkForStorage();
 document.querySelector('.js-add-to-album').addEventListener('click', createNewFoto);
 document.querySelector('.js-album').addEventListener('click', fotoEventChecker);
 document.querySelector('.js-album').addEventListener('focusout', getEdits);
-retrieveInput('title').addEventListener('input', toggleButtonActiveStatus);
-retrieveInput('caption').addEventListener('input', toggleButtonActiveStatus);
+retrieveInput('title').addEventListener('input', canEnable);
+retrieveInput('caption').addEventListener('input', canEnable);
+document.querySelector('.js-file-input').addEventListener('change', canEnable);
+
+function canEnable() {
+  if (!retrieveInput('title').value || !retrieveInput('caption').value || !document.querySelector('.js-file-input').value ) {
+    document.querySelector('.js-add-to-album').disabled = true;
+  } else {
+    document.querySelector('.js-add-to-album').disabled = false;
+  }
+}
 
 function changeFavCounter(fotoObj) {
   if (fotoObj.favorite) {
