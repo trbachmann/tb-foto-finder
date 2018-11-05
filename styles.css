@@ -5,21 +5,22 @@
 }
 
 body {
-  font-family: 'Open Sans', 'Font Awesome\ 5 Free', sans-serif;
   background-color: #C2B2B4;
+  font-family: 'Open Sans', 'Font Awesome\ 5 Free', sans-serif;
 }
 
+/*NAV STYLING*/
 nav {
+  background-color: #3E2A35;
   color: white;
   display: flex;
   justify-content: space-between;
-  background-color: #3E2A35;
 
 }
 
 h1 {
+  font-size: 3.5em;
   margin-left: 2%;
-  font-size: 2.5em;
 }
 
 .foto-logo {
@@ -27,17 +28,17 @@ h1 {
 }
 
 .search-bar-contain {
-  display: flex;
-  height: 2em;
-  margin: auto 2% auto 0;
   border: 0;
+  display: flex;
+  height: 3em;
+  margin: auto 2% auto 0;
 }
 
 .search-input {
   border: 2px solid #C2B2B4;
   border-radius: 4px 0 0 4px;
   flex: 1;
-  padding-left: 4%;
+  padding: 0 7% 0 5%;
 }
 
 .search-btn {
@@ -45,13 +46,14 @@ h1 {
   border: 1px solid #C2B2B4;
   border-radius: 0 4px 4px 0;
   color: white;
+  width: 17%;
 }
 
+/*HEADER / FORM STYLING */
 header {
   background-color: #3E2A35;
   color: white;
   display: flex;
-
 }
 
 form {
@@ -76,11 +78,11 @@ label {
 }
 
 .file-input {
-  width: 0.1px;
   height: 0.1px;
   opacity: 0;
   overflow: hidden;
   position: absolute;
+  width: 0.1px;
   z-index: -1;
 }
 
@@ -101,8 +103,8 @@ label {
 }
 
 .file-upload-btn {
-  margin: 6% 0 0 0;  
   cursor: pointer;
+  margin: 6% 0 0 0;  
 }
 
 .album-btns {
@@ -114,16 +116,16 @@ label {
   background-color: #938284;
 }
 
+/*MAIN / PHOTOS POSTED STYLING*/
 main {
-  display: flex;
-  justify-content: space-around;
+  padding-left: 5%;
 }
 
 .album {
   display: flex;
   flex-wrap: wrap;
   width: 98%;
-  margin: 3% 3%;
+  margin: 3% auto;
 }
 
 .image-contain {
@@ -183,7 +185,8 @@ p {
   background-repeat: no-repeat;
 }
 
-@media screen and (max-width: 780px) {
+/*MEDIA QUERIES*/
+@media screen and (max-width: 790px) {
   .album-btns {
     width: 46%;
   }
@@ -194,18 +197,88 @@ p {
   }
 
   h1 {
-    font-size: 3.2em;
+    font-size: 4.6em;
     margin-left: 0;
   }
 
   .search-bar-contain {
-    width: 52%;
+    height: 2.8em;
     margin: auto 0;
+    width: 78%;
+  }
+
+  .search-btn {
+    width: 10%;
+  }
+
+  form {
+    width: 78%;
   }
 }
 
-@media screen and (max-width: 650px) {
+
+@media screen and (max-width: 665px) {
+  h1 {
+    font-size: 3.6em;
+  }
+
   .album-btns {
     font-size: .9em;
+  }
+
+  .search-bar-contain {
+    width: 72%;
+  }
+
+  .search-btn {
+    width: 15%;
+  }
+
+  form {
+    width: 72%;
+  }
+
+  .image-contain {
+    margin: 1.5% auto;
+  }
+}
+
+@media screen and (max-width: 590px) {
+  h1 {
+    font-size: 3.1em;
+  }
+}
+
+@media screen and (max-width: 490px) {
+  h1 {
+    font-size: 2.6em;
+  }
+
+  main {
+    padding-left: 0%;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  h1 {
+    font-size: 2.5em;
+  }
+
+  .search-bar-contain {
+    width: 85%;
+  }
+
+  .search-btn {
+    width: 15%;
+  }
+
+  form {
+    width: 85%;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  h1 {
+    font-size: 2.15em;
   }
 }
