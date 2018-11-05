@@ -114,8 +114,16 @@ function repopulateDom() {
     var foto = new Photo(jsonObj.title, jsonObj.caption, jsonObj.file, jsonObj.id, jsonObj.favorite);
     postToPage(foto);
     albumArray.push(foto);
-    changeFavCounter(foto);
+    repopulateFavCounter(foto);
   });
+}
+
+function repopulateFavCounter(fotoObj) {
+  if (fotoObj.favorite) {
+    favCounter++;
+  }
+
+  document.querySelector('.js-num-of-favs').innerHTML = favCounter;
 }
 
 function retrieveInput(whichInput) {
