@@ -6,6 +6,8 @@ checkForStorage();
 document.querySelector('.js-add-to-album').addEventListener('click', createNewFoto);
 document.querySelector('.js-album').addEventListener('click', fotoEventChecker);
 document.querySelector('.js-album').addEventListener('focusout', getEdits);
+retrieveInput('title').addEventListener('input', toggleButtonActiveStatus);
+retrieveInput('caption').addEventListener('input', toggleButtonActiveStatus);
 
 function changeFavCounter(fotoObj) {
   if (fotoObj.favorite) {
@@ -26,6 +28,8 @@ function checkForStorage() {
 function clearInputFields() {
   retrieveInput('title').value = '';
   retrieveInput('caption').value = '';
+  document.querySelector('.js-file-input').value = '';
+
 }
 
 function createNewFoto(event) {
@@ -41,7 +45,7 @@ function createNewFoto(event) {
     clearInputFields();
   });
   reader.readAsDataURL(retrieveInput('imgFile'));
-
+  toggleButtonActiveStatus();
 }
 
 function deleteFoto() {
@@ -136,6 +140,10 @@ function retrieveInput(whichInput) {
   } else {
     return document.querySelector('.js-search-input');
   }
+}
+
+function toggleButtonActiveStatus() {
+  document.querySelector('.js-add-to-album').disabled = !document.querySelector('.js-add-to-album').disabled;
 }
 
 function updateCaption() {
