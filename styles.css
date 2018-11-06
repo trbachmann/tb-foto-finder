@@ -112,7 +112,8 @@ label {
 }
 
 .add-to-album:disabled {
-  filter: grayscale(40%);
+  background-color: #b6abac;
+  filter: grayscale(30%);
 }
 
 .view-favs-btn:hover,
