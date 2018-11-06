@@ -8,9 +8,11 @@ document.querySelector('.js-album').addEventListener('click', fotoEventChecker);
 document.querySelector('.js-album').addEventListener('focusout', getEdits);
 document.querySelector('.js-file-input').addEventListener('change', canEnable);
 document.querySelector('.js-search-input').addEventListener('keyup', startSearch)
-
+document.querySelector('.js-show-btn').addEventListener('click', showMoreorLess)
 retrieveInput('title').addEventListener('input', canEnable);
 retrieveInput('caption').addEventListener('input', canEnable);
+
+
 
 function canEnable() {
   if (!retrieveInput('title').value || !retrieveInput('caption').value || !document.querySelector('.js-file-input').value ) {
@@ -140,10 +142,11 @@ function repopulateDom() {
 
   jsonUserPhotoArray.forEach(function(jsonObj) {
     var foto = new Photo(jsonObj.title, jsonObj.caption, jsonObj.file, jsonObj.id, jsonObj.favorite);
-    postToPage(foto);
+    // postToPage(foto);
     albumArray.push(foto);
     repopulateFavCounter(foto);
   });
+  showTenPhotos();
 }
 
 function repopulateFavCounter(fotoObj) {
@@ -164,6 +167,14 @@ function retrieveInput(whichInput) {
   } else {
     return document.querySelector('.js-search-input');
   }
+}
+
+function showTenPhotos() {
+  albumArray.forEach( function(foto, index, array) {
+    if (index >= array.length - 10) {
+      postToPage(foto);
+    }
+  });
 }
 
 function startSearch() {
