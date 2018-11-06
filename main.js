@@ -8,11 +8,16 @@ document.querySelector('.js-album').addEventListener('click', fotoEventChecker);
 document.querySelector('.js-album').addEventListener('focusout', getEdits);
 document.querySelector('.js-file-input').addEventListener('change', canEnable);
 document.querySelector('.js-search-input').addEventListener('keyup', startSearch)
-document.querySelector('.js-show-btn').addEventListener('click', showMoreorLess)
+document.querySelector('.js-show-btn').addEventListener('click', showMoreOrLess)
 retrieveInput('title').addEventListener('input', canEnable);
 retrieveInput('caption').addEventListener('input', canEnable);
 
-
+function showMoreOrLess() {
+  document.querySelector('.js-album').innerHTML = '';
+  albumArray.forEach( function(fotoObj){
+    postToPage(fotoObj);
+  });
+}
 
 function canEnable() {
   if (!retrieveInput('title').value || !retrieveInput('caption').value || !document.querySelector('.js-file-input').value ) {
