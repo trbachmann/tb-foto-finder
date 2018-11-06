@@ -19,7 +19,12 @@ class Photo {
       }
     });
     albumArray = newalbumArray;
+    
+    if (albumArray.length !== 0) {
     this.saveToStorage(albumArray);
+    } else {
+      localStorage.clear();
+    }
   }
 
   updatePhoto(title, caption, favorite) {

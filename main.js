@@ -31,7 +31,10 @@ function changeFavCounter(fotoObj) {
 function checkForStorage() {
   if (localStorage.length !== 0) {
     repopulateDom();
-    //put a child html element in 'js-album' that says "add photos"
+  } else {
+    document.querySelector('.js-album').insertAdjacentHTML('afterbegin', 
+      `<h2 id="add-photos-subtitle">Add your photos with the form above!</h2>`
+    );
   }
 }
 
@@ -68,8 +71,12 @@ function deleteFoto() {
   });
 
   event.target.closest('.js-foto').remove();
-  //if the .childElementCount of 'js-album' is 0, 
-  // then put a child html element in 'js-album' that says "add photos"
+
+  if (document.querySelector('.js-album').childElementCount === 0) {
+    document.querySelector('.js-album').insertAdjacentHTML('afterbegin', 
+      `<h2 id="add-photos-sub">Add your photos with the form above!</h2>`
+    );
+  }
 }
 
 function favoriteFoto() {
@@ -108,8 +115,9 @@ function getEdits(event) {
 }
 
 function postToPage(fotoObj) {
-  //if '.js-album' has a first child
-  // and that child strictly equals an element that says "add photo", remove it
+  if (document.getElementById("add-photos-subtitle")) {
+    document.getElementById("add-photos-subtitle").parentNode.removeChild(document.getElementById("aadd-photos-subtitle"));
+  }
     document.querySelector('.js-album').insertAdjacentHTML('afterbegin', 
       `<section data-fotoid="${fotoObj.id}" class="image-contain js-foto">
       <p class="js-title" contenteditable="true">${fotoObj.title}</p>
