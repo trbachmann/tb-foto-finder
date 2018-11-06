@@ -112,7 +112,8 @@ label {
 }
 
 .add-to-album:disabled {
-  filter: grayscale(40%);
+  background-color: #b6abac;
+  filter: grayscale(30%);
 }
 
 .view-favs-btn:hover,
@@ -127,6 +128,11 @@ label {
 /*MAIN / PHOTOS POSTED STYLING*/
 main {
   padding-left: 5%;
+}
+
+h2 {
+  color: white;
+  margin: auto;
 }
 
 .album {

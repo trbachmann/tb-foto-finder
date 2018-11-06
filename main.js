@@ -6,9 +6,9 @@ checkForStorage();
 document.querySelector('.js-add-to-album').addEventListener('click', createNewFoto);
 document.querySelector('.js-album').addEventListener('click', fotoEventChecker);
 document.querySelector('.js-album').addEventListener('focusout', getEdits);
+document.querySelector('.js-file-input').addEventListener('change', canEnable);
 retrieveInput('title').addEventListener('input', canEnable);
 retrieveInput('caption').addEventListener('input', canEnable);
-document.querySelector('.js-file-input').addEventListener('change', canEnable);
 
 function canEnable() {
   if (!retrieveInput('title').value || !retrieveInput('caption').value || !document.querySelector('.js-file-input').value ) {
@@ -31,6 +31,10 @@ function changeFavCounter(fotoObj) {
 function checkForStorage() {
   if (localStorage.length !== 0) {
     repopulateDom();
+  } else {
+    document.querySelector('.js-album').insertAdjacentHTML('afterbegin', 
+      `<h2 id="add-photos-subtitle">Add your photos with the form above!</h2>`
+    );
   }
 }
 
@@ -60,13 +64,19 @@ function createNewFoto(event) {
 function deleteFoto() {
   var fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
 
-  albumArray = albumArray.filter(function(foto) {
+  albumArray.forEach(function(foto) {
     if (foto.id === fotoId) {
       foto.deleteFromStorage(fotoId);
     }
   });
 
   event.target.closest('.js-foto').remove();
+
+  if (document.querySelector('.js-album').childElementCount === 0) {
+    document.querySelector('.js-album').insertAdjacentHTML('afterbegin', 
+      `<h2 id="add-photos-sub">Add your photos with the form above!</h2>`
+    );
+  }
 }
 
 function favoriteFoto() {
@@ -105,6 +115,9 @@ function getEdits(event) {
 }
 
 function postToPage(fotoObj) {
+  if (document.getElementById("add-photos-subtitle")) {
+    document.getElementById("add-photos-subtitle").parentNode.removeChild(document.getElementById("aadd-photos-subtitle"));
+  }
     document.querySelector('.js-album').insertAdjacentHTML('afterbegin', 
       `<section data-fotoid="${fotoObj.id}" class="image-contain js-foto">
       <p class="js-title" contenteditable="true">${fotoObj.title}</p>

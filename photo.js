@@ -13,13 +13,18 @@ class Photo {
   }
 
   deleteFromStorage(fotoId) {
-    albumArray = albumArray.filter(function(fotoInst) {
+    var newalbumArray = albumArray.filter(function(fotoInst) {
       if (fotoInst.id !== fotoId) {
         return fotoInst;
       }
     });
+    albumArray = newalbumArray;
     
+    if (albumArray.length !== 0) {
     this.saveToStorage(albumArray);
+    } else {
+      localStorage.clear();
+    }
   }
 
   updatePhoto(title, caption, favorite) {
