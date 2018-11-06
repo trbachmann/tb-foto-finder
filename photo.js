@@ -13,12 +13,12 @@ class Photo {
   }
 
   deleteFromStorage(fotoId) {
-    albumArray = albumArray.filter(function(fotoInst) {
+    var newalbumArray = albumArray.filter(function(fotoInst) {
       if (fotoInst.id !== fotoId) {
         return fotoInst;
       }
     });
-    
+    albumArray = newalbumArray;
     this.saveToStorage(albumArray);
   }
 

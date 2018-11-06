@@ -61,7 +61,7 @@ function createNewFoto(event) {
 function deleteFoto() {
   var fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
 
-  albumArray = albumArray.filter(function(foto) {
+  albumArray.forEach(function(foto) {
     if (foto.id === fotoId) {
       foto.deleteFromStorage(fotoId);
     }
