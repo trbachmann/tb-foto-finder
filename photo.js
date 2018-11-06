@@ -18,10 +18,11 @@ class Photo {
         return fotoInst;
       }
     });
-    albumArray = newalbumArray;
+    
+    albumArray = newalbumArray; 
     
     if (albumArray.length !== 0) {
-    this.saveToStorage(albumArray);
+      this.saveToStorage(albumArray);
     } else {
       localStorage.clear();
     }
