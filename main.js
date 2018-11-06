@@ -12,13 +12,6 @@ document.querySelector('.js-show-btn').addEventListener('click', showMoreOrLess)
 retrieveInput('title').addEventListener('input', canEnable);
 retrieveInput('caption').addEventListener('input', canEnable);
 
-function showMoreOrLess() {
-  document.querySelector('.js-album').innerHTML = '';
-  albumArray.forEach( function(fotoObj){
-    postToPage(fotoObj);
-  });
-}
-
 function canEnable() {
   if (!retrieveInput('title').value || !retrieveInput('caption').value || !document.querySelector('.js-file-input').value ) {
     document.querySelector('.js-add-to-album').disabled = true;
@@ -174,8 +167,23 @@ function retrieveInput(whichInput) {
   }
 }
 
+function showMoreOrLess() {
+  document.querySelector('.js-album').innerHTML = '';
+
+  if (event.target.innerText === 'Show More') {
+    albumArray.forEach( function(fotoObj){
+    postToPage(fotoObj);
+    });
+
+    event.target.innerText = 'Show Less';
+  } else {
+    showTenPhotos();
+    event.target.innerText = 'Show More';
+  }
+}
+
 function showTenPhotos() {
-  albumArray.forEach( function(foto, index, array) {
+  albumArray.forEach(function(foto, index, array) {
     if (index >= array.length - 10) {
       postToPage(foto);
     }
