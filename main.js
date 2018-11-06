@@ -7,6 +7,7 @@ document.querySelector('.js-add-to-album').addEventListener('click', createNewFo
 document.querySelector('.js-album').addEventListener('click', fotoEventChecker);
 document.querySelector('.js-album').addEventListener('focusout', getEdits);
 document.querySelector('.js-file-input').addEventListener('change', canEnable);
+
 retrieveInput('title').addEventListener('input', canEnable);
 retrieveInput('caption').addEventListener('input', canEnable);
 
@@ -42,12 +43,10 @@ function clearInputFields() {
   retrieveInput('title').value = '';
   retrieveInput('caption').value = '';
   document.querySelector('.js-file-input').value = '';
-
 }
 
 function createNewFoto(event) {
   event.preventDefault();
-  // var fileBlob = document.querySelector('.js-file-input').files[0];
   var reader = new FileReader();
 
   reader.addEventListener("loadend", function() {
@@ -57,6 +56,7 @@ function createNewFoto(event) {
     foto.saveToStorage(albumArray);
     clearInputFields();
   });
+
   reader.readAsDataURL(retrieveInput('imgFile'));
   toggleButtonActiveStatus();
 }
@@ -102,7 +102,7 @@ function fotoEventChecker() {
   if (event.target.classList.contains('js-fav-btn')) {
     favoriteFoto();
   }
-}
+} 
 
 function getEdits(event) {
   if (event.target.classList.contains('js-title')) {
@@ -116,7 +116,8 @@ function getEdits(event) {
 
 function postToPage(fotoObj) {
   if (document.getElementById("add-photos-subtitle")) {
-    document.getElementById("add-photos-subtitle").parentNode.removeChild(document.getElementById("aadd-photos-subtitle"));
+    var message = document.getElementById("add-photos-subtitle")
+    message.parentNode.removeChild(message);
   }
     document.querySelector('.js-album').insertAdjacentHTML('afterbegin', 
       `<section data-fotoid="${fotoObj.id}" class="image-contain js-foto">
