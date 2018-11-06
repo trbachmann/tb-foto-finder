@@ -12,21 +12,6 @@ document.querySelector('.js-search-input').addEventListener('keyup', startSearch
 retrieveInput('title').addEventListener('input', canEnable);
 retrieveInput('caption').addEventListener('input', canEnable);
 
-function startSearch() {
-  document.querySelector('.js-album').innerHTML = '';
-
-  var searchQuery = document.querySelector('.js-search-input').value.toLowerCase();
-
-  var fotosMatchingQuery = albumArray.filter(function(foto) {
-      return foto.title.toLowerCase().includes(searchQuery) || foto.caption.toLowerCase().includes(searchQuery);
-  });
-
-  fotosMatchingQuery.forEach(function(fotoMatchingQuery){
-    postToPage(fotoMatchingQuery);
-  });
-
-}
-
 function canEnable() {
   if (!retrieveInput('title').value || !retrieveInput('caption').value || !document.querySelector('.js-file-input').value ) {
     document.querySelector('.js-add-to-album').disabled = true;
@@ -179,6 +164,21 @@ function retrieveInput(whichInput) {
   } else {
     return document.querySelector('.js-search-input');
   }
+}
+
+function startSearch() {
+  document.querySelector('.js-album').innerHTML = '';
+
+  var searchQuery = document.querySelector('.js-search-input').value.toLowerCase();
+
+  var fotosMatchingQuery = albumArray.filter(function(foto) {
+      return foto.title.toLowerCase().includes(searchQuery) || foto.caption.toLowerCase().includes(searchQuery);
+  });
+
+  fotosMatchingQuery.forEach(function(fotoMatchingQuery){
+    postToPage(fotoMatchingQuery);
+  });
+
 }
 
 function toggleButtonActiveStatus() {
