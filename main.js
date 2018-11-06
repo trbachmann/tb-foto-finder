@@ -7,9 +7,25 @@ document.querySelector('.js-add-to-album').addEventListener('click', createNewFo
 document.querySelector('.js-album').addEventListener('click', fotoEventChecker);
 document.querySelector('.js-album').addEventListener('focusout', getEdits);
 document.querySelector('.js-file-input').addEventListener('change', canEnable);
+document.querySelector('.js-search-input').addEventListener('keyup', startSearch)
 
 retrieveInput('title').addEventListener('input', canEnable);
 retrieveInput('caption').addEventListener('input', canEnable);
+
+function startSearch() {
+  document.querySelector('.js-album').innerHTML = '';
+
+  var searchQuery = document.querySelector('.js-search-input').value.toLowerCase();
+
+  var fotosMatchingQuery = albumArray.filter(function(foto) {
+      return foto.title.toLowerCase().includes(searchQuery) || foto.caption.toLowerCase().includes(searchQuery);
+  });
+
+  fotosMatchingQuery.forEach(function(fotoMatchingQuery){
+    postToPage(fotoMatchingQuery);
+  });
+
+}
 
 function canEnable() {
   if (!retrieveInput('title').value || !retrieveInput('caption').value || !document.querySelector('.js-file-input').value ) {
