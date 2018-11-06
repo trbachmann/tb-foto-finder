@@ -8,24 +8,9 @@ document.querySelector('.js-album').addEventListener('click', fotoEventChecker);
 document.querySelector('.js-album').addEventListener('focusout', getEdits);
 document.querySelector('.js-file-input').addEventListener('change', canEnable);
 document.querySelector('.js-search-input').addEventListener('keyup', startSearch)
-
+document.querySelector('.js-show-btn').addEventListener('click', showMoreOrLess)
 retrieveInput('title').addEventListener('input', canEnable);
 retrieveInput('caption').addEventListener('input', canEnable);
-
-function startSearch() {
-  document.querySelector('.js-album').innerHTML = '';
-
-  var searchQuery = document.querySelector('.js-search-input').value.toLowerCase();
-
-  var fotosMatchingQuery = albumArray.filter(function(foto) {
-      return foto.title.toLowerCase().includes(searchQuery) || foto.caption.toLowerCase().includes(searchQuery);
-  });
-
-  fotosMatchingQuery.forEach(function(fotoMatchingQuery){
-    postToPage(fotoMatchingQuery);
-  });
-
-}
 
 function canEnable() {
   if (!retrieveInput('title').value || !retrieveInput('caption').value || !document.querySelector('.js-file-input').value ) {
@@ -155,10 +140,11 @@ function repopulateDom() {
 
   jsonUserPhotoArray.forEach(function(jsonObj) {
     var foto = new Photo(jsonObj.title, jsonObj.caption, jsonObj.file, jsonObj.id, jsonObj.favorite);
-    postToPage(foto);
+    // postToPage(foto);
     albumArray.push(foto);
     repopulateFavCounter(foto);
   });
+  showTenPhotos();
 }
 
 function repopulateFavCounter(fotoObj) {
@@ -179,6 +165,44 @@ function retrieveInput(whichInput) {
   } else {
     return document.querySelector('.js-search-input');
   }
+}
+
+function showMoreOrLess() {
+  document.querySelector('.js-album').innerHTML = '';
+
+  if (event.target.innerText === 'Show More') {
+    albumArray.forEach( function(fotoObj){
+    postToPage(fotoObj);
+    });
+
+    event.target.innerText = 'Show Less';
+  } else {
+    showTenPhotos();
+    event.target.innerText = 'Show More';
+  }
+}
+
+function showTenPhotos() {
+  albumArray.forEach(function(foto, index, array) {
+    if (index >= array.length - 10) {
+      postToPage(foto);
+    }
+  });
+}
+
+function startSearch() {
+  document.querySelector('.js-album').innerHTML = '';
+
+  var searchQuery = document.querySelector('.js-search-input').value.toLowerCase();
+
+  var fotosMatchingQuery = albumArray.filter(function(foto) {
+      return foto.title.toLowerCase().includes(searchQuery) || foto.caption.toLowerCase().includes(searchQuery);
+  });
+
+  fotosMatchingQuery.forEach(function(fotoMatchingQuery){
+    postToPage(fotoMatchingQuery);
+  });
+
 }
 
 function toggleButtonActiveStatus() {
