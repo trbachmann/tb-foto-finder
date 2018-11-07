@@ -22,7 +22,7 @@ function changeFavCounter(fotoObj) {
     favCounter--;
   }
 
-  document.querySelector('.js-view-favs-btn').innerHTML = `View ${favCounter} favorites`;
+  document.querySelector('.js-view-favs-btn').innerHTML = `View ${favCounter} Favorites`;
 }
 
 function checkForStorage() {
