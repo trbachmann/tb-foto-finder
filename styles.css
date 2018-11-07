@@ -141,7 +141,6 @@ h2 {
 .album {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
   margin: 3% auto;
   width: 98%;
 }
