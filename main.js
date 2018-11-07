@@ -4,42 +4,16 @@ var favCounter = 0;
 checkForStorage();
 
 document.querySelector('.js-add-to-album').addEventListener('click', createNewFoto);
-document.querySelector('.js-album').addEventListener('click', fotoEventChecker);
-document.querySelector('.js-album').addEventListener('focusout', getEdits);
-document.querySelector('.js-file-input').addEventListener('change', canEnable);
+document.querySelector('.js-album').addEventListener('click', checkFotoBtnEvents);
+document.querySelector('.js-album').addEventListener('focusout', getTextEdits);
+document.querySelector('.js-file-input').addEventListener('change', enableAddToAlbumBtn);
 document.querySelector('.js-search-input').addEventListener('keyup', startSearch);
-document.querySelector('.js-show-btn').addEventListener('click', showMoreOrLess);
-document.querySelector('.js-view-favs-btn').addEventListener('click', showFavFotosorAll)
-retrieveInput('title').addEventListener('input', canEnable);
-retrieveInput('caption').addEventListener('input', canEnable);
+document.querySelector('.js-show-btn').addEventListener('click', showMoreOrLessFotos);
+document.querySelector('.js-view-favs-btn').addEventListener('click', showsFavsOrAllPhotos);
 
-function showFavFotosorAll(event) {
-  event.preventDefault();
-  document.querySelector('.js-album').innerHTML = '';
+retrieveInput('title').addEventListener('input', enableAddToAlbumBtn);
+retrieveInput('caption').addEventListener('input', enableAddToAlbumBtn);
 
-  if (event.target.innerText === 'View All Photos') {
-    albumArray.forEach( function(fotoObj) {
-      postToPage(fotoObj);
-    });
-    
-    event.target.innerText = `View ${favCounter} favorites`;
-  } else {
-      albumArray.forEach(function(foto) {
-        if (foto.favorite === true) {
-          postToPage(foto);
-        }
-      });
-      event.target.innerText = 'View All Photos';
-    }
-}
-
-function canEnable() {
-  if (!retrieveInput('title').value || !retrieveInput('caption').value || !document.querySelector('.js-file-input').value ) {
-    document.querySelector('.js-add-to-album').disabled = true;
-  } else {
-    document.querySelector('.js-add-to-album').disabled = false;
-  }
-}
 
 function changeFavCounter(fotoObj) {
   if (fotoObj.favorite) {
@@ -56,8 +30,18 @@ function checkForStorage() {
     repopulateDom();
   } else {
     document.querySelector('.js-album').insertAdjacentHTML('afterbegin', 
-      `<h2 id="add-photos-subtitle">Add your photos with the form above!</h2>`
+      `<h2 id="add-photos-subtitle">Add photos to your album with the form above!</h2>`
     );
+  }
+}
+
+function checkFotoBtnEvents() {
+  if (event.target.classList.contains('js-delete-btn')) {
+    deleteFoto();
+  }
+
+  if (event.target.classList.contains('js-fav-btn')) {
+    favoriteFoto();
   }
 }
 
@@ -96,8 +80,16 @@ function deleteFoto() {
 
   if (document.querySelector('.js-album').childElementCount === 0) {
     document.querySelector('.js-album').insertAdjacentHTML('afterbegin', 
-      `<h2 id="add-photos-sub">Add your photos with the form above!</h2>`
+      `<h2 id="add-photos-sub">Add photos to your album with the form above!</h2>`
     );
+  }
+}
+
+function enableAddToAlbumBtn() {
+  if (!retrieveInput('title').value || !retrieveInput('caption').value || !document.querySelector('.js-file-input').value ) {
+    document.querySelector('.js-add-to-album').disabled = true;
+  } else {
+    document.querySelector('.js-add-to-album').disabled = false;
   }
 }
 
@@ -105,7 +97,6 @@ function favoriteFoto() {
   var fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
    
   albumArray.forEach(function(foto) {
-    
     if (foto.id === fotoId) {
       foto.favorite = !foto.favorite;
       foto.updatePhoto(foto.title, foto.caption, foto.favorite)
@@ -116,17 +107,7 @@ function favoriteFoto() {
   });
 }
 
-function fotoEventChecker() {
-  if (event.target.classList.contains('js-delete-btn')) {
-    deleteFoto();
-  }
-
-  if (event.target.classList.contains('js-fav-btn')) {
-    favoriteFoto();
-  }
-} 
-
-function getEdits(event) {
+function getTextEdits(event) {
   if (event.target.classList.contains('js-title')) {
     updateTitle();
   }
@@ -138,35 +119,36 @@ function getEdits(event) {
 
 function postToPage(fotoObj) {
   if (document.getElementById("add-photos-subtitle")) {
-    var message = document.getElementById("add-photos-subtitle")
+    var message = document.getElementById("add-photos-subtitle");
     message.parentNode.removeChild(message);
   }
-    document.querySelector('.js-album').insertAdjacentHTML('afterbegin', 
-      `<section data-fotoid="${fotoObj.id}" class="image-contain js-foto">
-      <p class="js-title" contenteditable="true">${fotoObj.title}</p>
-      <img class="fit-image" src="${fotoObj.file}" alt="${fotoObj.title}">
-      <p class="js-caption" contenteditable="true">${fotoObj.caption}</p>
-      <article class="image-btns-contain">
-      <button class="delete-btn js-delete-btn">
-      </button>
-      <button class="fav-btn favorite-btn-${fotoObj.favorite} js-fav-btn">
-      </button>
-      </article>
-      </section>`
-      );
+  
+  document.querySelector('.js-album').insertAdjacentHTML('afterbegin', 
+    `<section data-fotoid="${fotoObj.id}" class="image-contain js-foto">
+    <p class="js-title" contenteditable="true">${fotoObj.title}</p>
+    <img class="fit-image" src="${fotoObj.file}" alt="${fotoObj.title}">
+    <p class="js-caption" contenteditable="true">${fotoObj.caption}</p>
+    <article class="image-btns-contain">
+    <button class="delete-btn js-delete-btn">
+    </button>
+    <button class="fav-btn favorite-btn-${fotoObj.favorite} js-fav-btn">
+    </button>
+    </article>
+    </section>`
+  );
 }
 
 function repopulateDom() {
-  var jsonUserPhotoArray = JSON.parse((localStorage.getItem('userphotos')));
+  var jsonUserPhotosArray = JSON.parse((localStorage.getItem('userphotos')));
 
-  jsonUserPhotoArray.forEach(function(jsonObj) {
+  jsonUserPhotosArray.forEach(function(jsonObj) {
     var foto = new Photo(jsonObj.title, jsonObj.caption, jsonObj.file, jsonObj.id, jsonObj.favorite);
-    // postToPage(foto);
     albumArray.push(foto);
     repopulateFavCounter(foto);
   });
+
   showTenPhotos();
-  document.querySelector('.js-view-favs-btn').innerHTML = `View ${favCounter} favorites`;
+  document.querySelector('.js-view-favs-btn').innerHTML = `View ${favCounter} Favorites`;
 }
 
 function repopulateFavCounter(fotoObj) {
@@ -187,12 +169,33 @@ function retrieveInput(whichInput) {
   }
 }
 
-function showMoreOrLess() {
+function showsFavsOrAllPhotos(event) {
+  event.preventDefault();
+  document.querySelector('.js-album').innerHTML = '';
+
+  if (event.target.innerText === 'View All Photos') {
+    albumArray.forEach(function(foto) {
+      postToPage(foto);
+    });
+    
+    event.target.innerText = `View ${favCounter} Favorites`;
+  } else {
+    albumArray.forEach(function(foto) {
+      if (foto.favorite === true) {
+        postToPage(foto);
+      }
+    });
+    
+    event.target.innerText = 'View All Photos';
+    }
+}
+
+function showMoreOrLessFotos() {
   document.querySelector('.js-album').innerHTML = '';
 
   if (event.target.innerText === 'Show More') {
-    albumArray.forEach( function(fotoObj){
-    postToPage(fotoObj);
+    albumArray.forEach(function(foto){
+      postToPage(foto);
     });
 
     event.target.innerText = 'Show Less';
@@ -212,17 +215,15 @@ function showTenPhotos() {
 
 function startSearch() {
   document.querySelector('.js-album').innerHTML = '';
-
   var searchQuery = document.querySelector('.js-search-input').value.toLowerCase();
 
-  var fotosMatchingQuery = albumArray.filter(function(foto) {
-      return foto.title.toLowerCase().includes(searchQuery) || foto.caption.toLowerCase().includes(searchQuery);
+  var fotosMatchingSearchQuery = albumArray.filter(function(foto) {
+    return foto.title.toLowerCase().includes(searchQuery) || foto.caption.toLowerCase().includes(searchQuery);
   });
 
-  fotosMatchingQuery.forEach(function(fotoMatchingQuery){
-    postToPage(fotoMatchingQuery);
+  fotosMatchingSearchQuery.forEach(function(foto) {
+    postToPage(foto);
   });
-
 }
 
 function toggleButtonActiveStatus() {
@@ -234,7 +235,7 @@ function updateCaption() {
 
   albumArray.forEach(function(foto) {
     if (foto.id === fotoId) {
-      foto.updatePhoto(event.target.previousElementSibling.previousElementSibling.innerHTML, event.target.innerHTML, foto.favorite)
+      foto.updatePhoto(event.target.previousElementSibling.previousElementSibling.innerHTML, event.target.innerHTML, foto.favorite);
       foto.saveToStorage(albumArray);
     }
   });
@@ -243,10 +244,10 @@ function updateCaption() {
 function updateTitle() {
   var fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
 
-    albumArray.forEach(function(foto) {
-      if (foto.id === fotoId) {
-        foto.updatePhoto(event.target.innerHTML, event.target.nextElementSibling.nextElementSibling.innerHTML, foto.favorite)
-        foto.saveToStorage(albumArray);
-      }
-    });
+  albumArray.forEach(function(foto) {
+    if (foto.id === fotoId) {
+      foto.updatePhoto(event.target.innerHTML, event.target.nextElementSibling.nextElementSibling.innerHTML, foto.favorite);
+      foto.saveToStorage(albumArray);
+    }
+  });
 }
