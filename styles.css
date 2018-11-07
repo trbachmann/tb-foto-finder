@@ -126,16 +126,12 @@ label {
 
 .show-btn {
   display: block;
-  margin: 5% 0% 5% 19.5%;
+  margin: 3% auto;
   padding: 1.7% 3%;
-  width: 56%;
+  width: 52.5%;
 }
 
 /*MAIN / PHOTOS POSTED STYLING*/
-main {
-  padding-left: 5%;
-}
-
 h2 {
   color: white;
   margin: auto;
@@ -144,6 +140,7 @@ h2 {
 .album {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
   margin: 3% auto;
   width: 98%;
 }
@@ -209,7 +206,8 @@ p {
 }
 
 /*MEDIA QUERIES*/
-@media screen and (max-width: 790px) {
+
+@media screen and (max-width: 885px) {
   .album-btns {
     width: 46%;
   }
@@ -226,7 +224,7 @@ p {
 
   .search-bar-contain {
     height: 2.8em;
-    margin: auto 0;
+    margin: 0 0 3% 0;
     width: 78%;
   }
 
@@ -238,31 +236,26 @@ p {
     width: 78%;
   }
 
+  .show-btn {
+    width: 77.5%;
+  }
+
   h2 {
     margin: auto;
   }
 }
 
-
-@media screen and (max-width: 665px) {
+@media screen and (max-width: 725px) {
   h1 {
-    font-size: 3.6em;
+    font-size: 4.3em;
   }
 
   .album-btns {
     font-size: .9em;
   }
 
-  .search-bar-contain {
-    width: 72%;
-  }
-
   .search-btn {
     width: 15%;
-  }
-
-  form {
-    width: 72%;
   }
 
   .image-contain {
@@ -270,41 +263,40 @@ p {
   }
 }
 
-@media screen and (max-width: 590px) {
+@media screen and (max-width: 650px) {
   h1 {
-    font-size: 3.1em;
-  }
-}
-
-@media screen and (max-width: 490px) {
-  h1 {
-    font-size: 2.6em;
-  }
-
-  main {
-    padding-left: 0%;
-  }
-}
-
-@media screen and (max-width: 400px) {
-  h1 {
-    font-size: 2.5em;
-  }
-
-  .search-bar-contain {
-    width: 85%;
+    font-size: 3.9em;
   }
 
   .search-btn {
     width: 15%;
   }
+}
 
-  form {
-    width: 85%;
+@media screen and (max-width: 590px) {
+  h1 {
+    font-size: 3.6em;
   }
 }
 
-@media screen and (max-width: 360px) {
+@media screen and (max-width: 535px) {
+  h1 {
+    font-size: 3.1em;
+  }
+}
+
+@media screen and (max-width: 470px) {
+  h1 {
+    font-size: 2.8em;
+  }
+}
+@media screen and (max-width: 420px) {
+  h1 {
+    font-size: 2.5em;
+  }
+}
+
+@media screen and (max-width: 380px) {
   h1 {
     font-size: 2.15em;
   }
