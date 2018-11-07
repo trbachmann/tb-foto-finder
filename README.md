@@ -18,4 +18,4 @@ Users can also:
 
 ![Final Site](./images/final-site-snapshot-1.png)
 
-![Final Site](./images/final-site[shot-2.png)
+![Final Site](./images/final-site-snapshot-2.png)
