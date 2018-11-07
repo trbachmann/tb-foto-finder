@@ -7,6 +7,7 @@
 body {
   background-color: #C2B2B4;
   font-family: 'Open Sans', 'Font Awesome\ 5 Free', sans-serif;
+  max-width: 1440px;
 }
 
 /*NAV STYLING*/
@@ -206,12 +207,12 @@ p {
 }
 
 /*MEDIA QUERIES*/
-
-@media screen and (max-width: 885px) {
-  .album-btns {
-    width: 46%;
+@media screen and (max-width: 975px) {
+  .album {
+    width: 70%;
   }
-
+}
+@media screen and (max-width: 885px) {
   nav {
     flex-direction: column;
     align-items: center;
@@ -235,6 +236,10 @@ p {
   form {
     width: 78%;
   }
+  
+  .album-btns {
+    width: 46%;
+  }
 
   .show-btn {
     width: 77.5%;
@@ -242,6 +247,16 @@ p {
 
   h2 {
     margin: auto;
+  }
+
+  .album {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 775px) {
+  .album {
+    width: 86%;
   }
 }
 
@@ -256,6 +271,10 @@ p {
 
   .search-btn {
     width: 15%;
+  }
+  
+  .album {
+    width: 80%;
   }
 
   .image-contain {
@@ -299,5 +318,9 @@ p {
 @media screen and (max-width: 380px) {
   h1 {
     font-size: 2.15em;
+  }
+
+  .album {
+    width: 90%
   }
 }
