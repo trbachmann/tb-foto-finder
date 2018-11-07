@@ -7,10 +7,31 @@ document.querySelector('.js-add-to-album').addEventListener('click', createNewFo
 document.querySelector('.js-album').addEventListener('click', fotoEventChecker);
 document.querySelector('.js-album').addEventListener('focusout', getEdits);
 document.querySelector('.js-file-input').addEventListener('change', canEnable);
-document.querySelector('.js-search-input').addEventListener('keyup', startSearch)
-document.querySelector('.js-show-btn').addEventListener('click', showMoreOrLess)
+document.querySelector('.js-search-input').addEventListener('keyup', startSearch);
+document.querySelector('.js-show-btn').addEventListener('click', showMoreOrLess);
+document.querySelector('.js-view-favs-btn').addEventListener('click', showFavFotosorAll)
 retrieveInput('title').addEventListener('input', canEnable);
 retrieveInput('caption').addEventListener('input', canEnable);
+
+function showFavFotosorAll(event) {
+  event.preventDefault();
+  document.querySelector('.js-album').innerHTML = '';
+
+  if (event.target.innerText === 'View All Photos') {
+    albumArray.forEach( function(fotoObj) {
+      postToPage(fotoObj);
+    });
+    
+    event.target.innerText = `View ${favCounter} favorites`;
+  } else {
+      albumArray.forEach(function(foto) {
+        if (foto.favorite === true) {
+          postToPage(foto);
+        }
+      });
+      event.target.innerText = 'View All Photos';
+    }
+}
 
 function canEnable() {
   if (!retrieveInput('title').value || !retrieveInput('caption').value || !document.querySelector('.js-file-input').value ) {
@@ -26,8 +47,8 @@ function changeFavCounter(fotoObj) {
   } else if (favCounter !== 0) {
     favCounter--;
   }
-  
-  document.querySelector('.js-num-of-favs').innerHTML = favCounter;
+
+  document.querySelector('.js-view-favs-btn').innerHTML = `View ${favCounter} favorites`;
 }
 
 function checkForStorage() {
@@ -82,7 +103,7 @@ function deleteFoto() {
 
 function favoriteFoto() {
   var fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
-  
+   
   albumArray.forEach(function(foto) {
     
     if (foto.id === fotoId) {
@@ -145,14 +166,13 @@ function repopulateDom() {
     repopulateFavCounter(foto);
   });
   showTenPhotos();
+  document.querySelector('.js-view-favs-btn').innerHTML = `View ${favCounter} favorites`;
 }
 
 function repopulateFavCounter(fotoObj) {
   if (fotoObj.favorite) {
     favCounter++;
   }
-
-  document.querySelector('.js-num-of-favs').innerHTML = favCounter;
 }
 
 function retrieveInput(whichInput) {
