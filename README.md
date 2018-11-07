@@ -15,3 +15,7 @@ Users can also:
 * JS
 
 ## Final Site
+
+![Final Site](./images/final-site-snapshot-1.png)
+
+![Final Site](./images/final-site[shot-2.png)
