@@ -15,7 +15,6 @@ nav {
   color: white;
   display: flex;
   justify-content: space-between;
-
 }
 
 h1 {
@@ -145,26 +144,25 @@ h2 {
 .album {
   display: flex;
   flex-wrap: wrap;
-  width: 98%;
   margin: 3% auto;
+  width: 98%;
 }
 
 .image-contain {
   background-color: white;
   border: 1px solid #5b4447;
   color: #3E2A35;
-  width: 290px;
-  height: 420px;
-  margin: 1.5% 1.5%;
   display: grid;
   grid-template-rows: 85px 1fr 1fr 60px;
+  height: 420px;
+  margin: 1.5% 1.5%;
+  width: 290px;
 }
 
 p {
-  margin: 4%;
   font-size: 1.15em;
   font-weight: 600;
-  /*trying using --> in combo with max height try overflow: scroll;*/
+  margin: 4%;
 }
 
 .fit-image {
@@ -238,6 +236,10 @@ p {
 
   form {
     width: 78%;
+  }
+
+  h2 {
+    margin: auto;
   }
 }
 
