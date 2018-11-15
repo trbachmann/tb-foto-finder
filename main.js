@@ -48,7 +48,7 @@ function checkFotoBtnEvents() {
 function clearInputFields() {
   retrieveInput('title').value = '';
   retrieveInput('caption').value = '';
-  document.querySelector('.js-file-input').value = '';
+  retrieveImg('input').value = '';
 }
 
 function createNewFoto(event) {
@@ -157,16 +157,6 @@ function repopulateFavCounter(fotoObj) {
   }
 }
 
-function retrieveInput(whichInput) {
-  if (whichInput === 'title') {
-    return document.querySelector('.js-title-input');
-  } else if (whichInput === 'caption') {
-    return document.querySelector('.js-caption-input');
-  } else if (whichInput === 'search') {
-    return document.querySelector('.js-search-input');
-  }
-}
-
 function retrieveImg(inputOrFile) {
   let image;
 
@@ -180,6 +170,16 @@ function retrieveImg(inputOrFile) {
   }
 
   return image;
+}
+
+function retrieveInput(whichInput) {
+  if (whichInput === 'title') {
+    return document.querySelector('.js-title-input');
+  } else if (whichInput === 'caption') {
+    return document.querySelector('.js-caption-input');
+  } else if (whichInput === 'search') {
+    return document.querySelector('.js-search-input');
+  }
 }
 
 function showsFavsOrAllPhotos(event) {
