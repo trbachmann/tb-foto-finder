@@ -6,13 +6,13 @@ checkForStorage();
 document.querySelector('.js-add-to-album').addEventListener('click', createNewFoto);
 document.querySelector('.js-album').addEventListener('click', checkFotoBtnEvents);
 document.querySelector('.js-album').addEventListener('focusout', getTextEdits);
-document.querySelector('.js-file-input').addEventListener('change', enableAddToAlbumBtn);
-document.querySelector('.js-search-input').addEventListener('keyup', startSearch);
 document.querySelector('.js-show-btn').addEventListener('click', showMoreOrLessFotos);
 document.querySelector('.js-view-favs-btn').addEventListener('click', showsFavsOrAllPhotos);
 
-retrieveInput('title').addEventListener('input', enableAddToAlbumBtn);
+retrieveImg('input').addEventListener('change', enableAddToAlbumBtn);
 retrieveInput('caption').addEventListener('input', enableAddToAlbumBtn);
+retrieveInput('title').addEventListener('input', enableAddToAlbumBtn);
+retrieveInput('search').addEventListener('keyup', startSearch);
 
 
 function changeFavCounter(fotoObj) {
@@ -63,7 +63,7 @@ function createNewFoto(event) {
     clearInputFields();
   });
 
-  reader.readAsDataURL(retrieveInput('imgFile'));
+  reader.readAsDataURL(retrieveImg('file'));
   toggleButtonActiveStatus();
 }
 
@@ -162,11 +162,24 @@ function retrieveInput(whichInput) {
     return document.querySelector('.js-title-input');
   } else if (whichInput === 'caption') {
     return document.querySelector('.js-caption-input');
-  } else if (whichInput === 'imgFile') {
-    return document.querySelector('.js-file-input').files[0];
-  } else {
+  } else if (whichInput === 'search') {
     return document.querySelector('.js-search-input');
   }
+}
+
+function retrieveImg(inputOrFile) {
+  let image;
+
+  switch (inputOrFile) {
+    case 'file':
+      image = document.querySelector('.js-file-input').files[0];
+      break;
+    case 'input':
+      image = document.querySelector('.js-file-input');
+      break;
+  }
+
+  return image;
 }
 
 function showsFavsOrAllPhotos(event) {
@@ -215,7 +228,7 @@ function showTenPhotos() {
 
 function startSearch() {
   document.querySelector('.js-album').innerHTML = '';
-  var searchQuery = document.querySelector('.js-search-input').value.toLowerCase();
+  var searchQuery = retrieveInput('search').value.toLowerCase();
 
   var fotosMatchingSearchQuery = albumArray.filter(function(foto) {
     return foto.title.toLowerCase().includes(searchQuery) || foto.caption.toLowerCase().includes(searchQuery);
