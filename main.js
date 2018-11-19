@@ -14,6 +14,11 @@ retrieveInput('caption').addEventListener('input', enableAddToAlbumBtn);
 retrieveInput('title').addEventListener('input', enableAddToAlbumBtn);
 retrieveInput('search').addEventListener('keyup', startSearch);
 
+function addInstructionsToAlbumArea() {
+  document.querySelector('.js-album').insertAdjacentHTML('afterbegin', 
+    `<h2 id="add-photos-subtitle">Add photos to your album with the form above!</h2>`
+  );
+}
 
 function changeFavCounter(fotoObj) {
   if (fotoObj.favorite) {
@@ -29,9 +34,7 @@ function checkForStorage() {
   if (localStorage.length !== 0) {
     repopulateDom();
   } else {
-    document.querySelector('.js-album').insertAdjacentHTML('afterbegin', 
-      `<h2 id="add-photos-subtitle">Add photos to your album with the form above!</h2>`
-    );
+    addInstructionsToAlbumArea();
   }
 }
 
@@ -79,9 +82,7 @@ function deleteFoto() {
   event.target.closest('.js-foto').remove();
 
   if (document.querySelector('.js-album').childElementCount === 0) {
-    document.querySelector('.js-album').insertAdjacentHTML('afterbegin', 
-      `<h2 id="add-photos-sub">Add photos to your album with the form above!</h2>`
-    );
+    addInstructionsToAlbumArea();
   }
 }
 
