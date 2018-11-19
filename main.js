@@ -53,10 +53,10 @@ function clearInputFields() {
 
 function createNewFoto(event) {
   event.preventDefault();
-  var reader = new FileReader();
+  let reader = new FileReader();
 
   reader.addEventListener("loadend", function() {
-    var foto = new Photo(retrieveInput('title').value, retrieveInput('caption').value, reader.result);
+    let foto = new Photo(retrieveInput('title').value, retrieveInput('caption').value, reader.result);
     postToPage(foto);
     albumArray.push(foto);
     foto.saveToStorage(albumArray);
@@ -68,7 +68,7 @@ function createNewFoto(event) {
 }
 
 function deleteFoto() {
-  var fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
+  let fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
 
   albumArray.forEach(function(foto) {
     if (foto.id === fotoId) {
@@ -94,7 +94,7 @@ function enableAddToAlbumBtn() {
 }
 
 function favoriteFoto() {
-  var fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
+  let fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
    
   albumArray.forEach(function(foto) {
     if (foto.id === fotoId) {
@@ -119,7 +119,7 @@ function getTextEdits(event) {
 
 function postToPage(fotoObj) {
   if (document.getElementById("add-photos-subtitle")) {
-    var message = document.getElementById("add-photos-subtitle");
+    let message = document.getElementById("add-photos-subtitle");
     message.parentNode.removeChild(message);
   }
   
@@ -139,10 +139,10 @@ function postToPage(fotoObj) {
 }
 
 function repopulateDom() {
-  var jsonUserPhotosArray = JSON.parse((localStorage.getItem('userphotos')));
+  let jsonUserPhotosArray = JSON.parse((localStorage.getItem('userphotos')));
 
   jsonUserPhotosArray.forEach(function(jsonObj) {
-    var foto = new Photo(jsonObj.title, jsonObj.caption, jsonObj.file, jsonObj.id, jsonObj.favorite);
+    let foto = new Photo(jsonObj.title, jsonObj.caption, jsonObj.file, jsonObj.id, jsonObj.favorite);
     albumArray.push(foto);
     repopulateFavCounter(foto);
   });
@@ -228,9 +228,9 @@ function showTenPhotos() {
 
 function startSearch() {
   document.querySelector('.js-album').innerHTML = '';
-  var searchQuery = retrieveInput('search').value.toLowerCase();
+  let searchQuery = retrieveInput('search').value.toLowerCase();
 
-  var fotosMatchingSearchQuery = albumArray.filter(function(foto) {
+  let fotosMatchingSearchQuery = albumArray.filter(function(foto) {
     return foto.title.toLowerCase().includes(searchQuery) || foto.caption.toLowerCase().includes(searchQuery);
   });
 
@@ -244,7 +244,7 @@ function toggleButtonActiveStatus() {
 }
 
 function updateCaption() {
-  var fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
+  let fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
 
   albumArray.forEach(function(foto) {
     if (foto.id === fotoId) {
@@ -255,7 +255,7 @@ function updateCaption() {
 }
 
 function updateTitle() {
-  var fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
+  let fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
 
   albumArray.forEach(function(foto) {
     if (foto.id === fotoId) {
