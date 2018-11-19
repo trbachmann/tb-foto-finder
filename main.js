@@ -6,14 +6,19 @@ checkForStorage();
 document.querySelector('.js-add-to-album').addEventListener('click', createNewFoto);
 document.querySelector('.js-album').addEventListener('click', checkFotoBtnEvents);
 document.querySelector('.js-album').addEventListener('focusout', getTextEdits);
-document.querySelector('.js-file-input').addEventListener('change', enableAddToAlbumBtn);
-document.querySelector('.js-search-input').addEventListener('keyup', startSearch);
 document.querySelector('.js-show-btn').addEventListener('click', showMoreOrLessFotos);
 document.querySelector('.js-view-favs-btn').addEventListener('click', showsFavsOrAllPhotos);
 
-retrieveInput('title').addEventListener('input', enableAddToAlbumBtn);
+retrieveImg('input').addEventListener('change', enableAddToAlbumBtn);
 retrieveInput('caption').addEventListener('input', enableAddToAlbumBtn);
+retrieveInput('title').addEventListener('input', enableAddToAlbumBtn);
+retrieveInput('search').addEventListener('keyup', startSearch);
 
+function addInstructionsToAlbumArea() {
+  document.querySelector('.js-album').insertAdjacentHTML('afterbegin', 
+    `<h2 id="add-photos-subtitle">Add photos to your album with the form above!</h2>`
+  );
+}
 
 function changeFavCounter(fotoObj) {
   if (fotoObj.favorite) {
@@ -29,9 +34,7 @@ function checkForStorage() {
   if (localStorage.length !== 0) {
     repopulateDom();
   } else {
-    document.querySelector('.js-album').insertAdjacentHTML('afterbegin', 
-      `<h2 id="add-photos-subtitle">Add photos to your album with the form above!</h2>`
-    );
+    addInstructionsToAlbumArea();
   }
 }
 
@@ -48,29 +51,29 @@ function checkFotoBtnEvents() {
 function clearInputFields() {
   retrieveInput('title').value = '';
   retrieveInput('caption').value = '';
-  document.querySelector('.js-file-input').value = '';
+  retrieveImg('input').value = '';
 }
 
 function createNewFoto(event) {
   event.preventDefault();
-  var reader = new FileReader();
+  let reader = new FileReader();
 
-  reader.addEventListener("loadend", function() {
-    var foto = new Photo(retrieveInput('title').value, retrieveInput('caption').value, reader.result);
+  reader.addEventListener("loadend", () => {
+    let foto = new Photo(retrieveInput('title').value, retrieveInput('caption').value, reader.result);
     postToPage(foto);
     albumArray.push(foto);
     foto.saveToStorage(albumArray);
     clearInputFields();
   });
 
-  reader.readAsDataURL(retrieveInput('imgFile'));
+  reader.readAsDataURL(retrieveImg('file'));
   toggleButtonActiveStatus();
 }
 
 function deleteFoto() {
-  var fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
+  let fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
 
-  albumArray.forEach(function(foto) {
+  albumArray.forEach(foto => {
     if (foto.id === fotoId) {
       foto.deleteFromStorage(fotoId);
     }
@@ -79,9 +82,7 @@ function deleteFoto() {
   event.target.closest('.js-foto').remove();
 
   if (document.querySelector('.js-album').childElementCount === 0) {
-    document.querySelector('.js-album').insertAdjacentHTML('afterbegin', 
-      `<h2 id="add-photos-sub">Add photos to your album with the form above!</h2>`
-    );
+    addInstructionsToAlbumArea();
   }
 }
 
@@ -94,9 +95,9 @@ function enableAddToAlbumBtn() {
 }
 
 function favoriteFoto() {
-  var fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
+  let fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
    
-  albumArray.forEach(function(foto) {
+  albumArray.forEach(foto => {
     if (foto.id === fotoId) {
       foto.favorite = !foto.favorite;
       foto.updatePhoto(foto.title, foto.caption, foto.favorite)
@@ -119,7 +120,7 @@ function getTextEdits(event) {
 
 function postToPage(fotoObj) {
   if (document.getElementById("add-photos-subtitle")) {
-    var message = document.getElementById("add-photos-subtitle");
+    let message = document.getElementById("add-photos-subtitle");
     message.parentNode.removeChild(message);
   }
   
@@ -139,10 +140,10 @@ function postToPage(fotoObj) {
 }
 
 function repopulateDom() {
-  var jsonUserPhotosArray = JSON.parse((localStorage.getItem('userphotos')));
+  let jsonUserPhotosArray = JSON.parse((localStorage.getItem('userphotos')));
 
-  jsonUserPhotosArray.forEach(function(jsonObj) {
-    var foto = new Photo(jsonObj.title, jsonObj.caption, jsonObj.file, jsonObj.id, jsonObj.favorite);
+  jsonUserPhotosArray.forEach(jsonObj => {
+    let foto = new Photo(jsonObj.title, jsonObj.caption, jsonObj.file, jsonObj.id, jsonObj.favorite);
     albumArray.push(foto);
     repopulateFavCounter(foto);
   });
@@ -157,14 +158,27 @@ function repopulateFavCounter(fotoObj) {
   }
 }
 
+function retrieveImg(inputOrFile) {
+  let image;
+
+  switch (inputOrFile) {
+    case 'file':
+      image = document.querySelector('.js-file-input').files[0];
+      break;
+    case 'input':
+      image = document.querySelector('.js-file-input');
+      break;
+  }
+
+  return image;
+}
+
 function retrieveInput(whichInput) {
   if (whichInput === 'title') {
     return document.querySelector('.js-title-input');
   } else if (whichInput === 'caption') {
     return document.querySelector('.js-caption-input');
-  } else if (whichInput === 'imgFile') {
-    return document.querySelector('.js-file-input').files[0];
-  } else {
+  } else if (whichInput === 'search') {
     return document.querySelector('.js-search-input');
   }
 }
@@ -174,13 +188,10 @@ function showsFavsOrAllPhotos(event) {
   document.querySelector('.js-album').innerHTML = '';
 
   if (event.target.innerText === 'View All Photos') {
-    albumArray.forEach(function(foto) {
-      postToPage(foto);
-    });
-    
+    albumArray.forEach(foto => postToPage(foto));
     event.target.innerText = `View ${favCounter} Favorites`;
   } else {
-    albumArray.forEach(function(foto) {
+    albumArray.forEach(foto => {
       if (foto.favorite === true) {
         postToPage(foto);
       }
@@ -194,10 +205,7 @@ function showMoreOrLessFotos() {
   document.querySelector('.js-album').innerHTML = '';
 
   if (event.target.innerText === 'Show More') {
-    albumArray.forEach(function(foto){
-      postToPage(foto);
-    });
-
+    albumArray.forEach(foto => postToPage(foto));
     event.target.innerText = 'Show Less';
   } else {
     showTenPhotos();
@@ -206,7 +214,7 @@ function showMoreOrLessFotos() {
 }
 
 function showTenPhotos() {
-  albumArray.forEach(function(foto, index, array) {
+  albumArray.forEach((foto, index, array) => {
     if (index >= array.length - 10) {
       postToPage(foto);
     }
@@ -215,15 +223,10 @@ function showTenPhotos() {
 
 function startSearch() {
   document.querySelector('.js-album').innerHTML = '';
-  var searchQuery = document.querySelector('.js-search-input').value.toLowerCase();
+  let searchQuery = retrieveInput('search').value.toLowerCase();
+  let fotosMatchingSearchQuery = albumArray.filter(foto => foto.title.toLowerCase().includes(searchQuery) || foto.caption.toLowerCase().includes(searchQuery));
 
-  var fotosMatchingSearchQuery = albumArray.filter(function(foto) {
-    return foto.title.toLowerCase().includes(searchQuery) || foto.caption.toLowerCase().includes(searchQuery);
-  });
-
-  fotosMatchingSearchQuery.forEach(function(foto) {
-    postToPage(foto);
-  });
+  fotosMatchingSearchQuery.forEach(foto => postToPage(foto));
 }
 
 function toggleButtonActiveStatus() {
@@ -231,9 +234,9 @@ function toggleButtonActiveStatus() {
 }
 
 function updateCaption() {
-  var fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
+  let fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
 
-  albumArray.forEach(function(foto) {
+  albumArray.forEach(foto => {
     if (foto.id === fotoId) {
       foto.updatePhoto(event.target.previousElementSibling.previousElementSibling.innerHTML, event.target.innerHTML, foto.favorite);
       foto.saveToStorage(albumArray);
@@ -242,9 +245,9 @@ function updateCaption() {
 }
 
 function updateTitle() {
-  var fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
+  let fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
 
-  albumArray.forEach(function(foto) {
+  albumArray.forEach(foto => {
     if (foto.id === fotoId) {
       foto.updatePhoto(event.target.innerHTML, event.target.nextElementSibling.nextElementSibling.innerHTML, foto.favorite);
       foto.saveToStorage(albumArray);
