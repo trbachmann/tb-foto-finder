@@ -8,12 +8,12 @@ class Photo {
   }
 
   saveToStorage(arrayToStore) {
-    var stringedAlbumArray = JSON.stringify(arrayToStore);
+    let stringedAlbumArray = JSON.stringify(arrayToStore);
     localStorage.setItem('userphotos', stringedAlbumArray);
   }
 
   deleteFromStorage(fotoId) {
-    var newalbumArray = albumArray.filter(function(fotoInst) {
+    let newalbumArray = albumArray.filter(function(fotoInst) {
       if (fotoInst.id !== fotoId) {
         return fotoInst;
       }

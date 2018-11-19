@@ -58,7 +58,7 @@ function createNewFoto(event) {
   event.preventDefault();
   let reader = new FileReader();
 
-  reader.addEventListener("loadend", function() {
+  reader.addEventListener("loadend", () => {
     let foto = new Photo(retrieveInput('title').value, retrieveInput('caption').value, reader.result);
     postToPage(foto);
     albumArray.push(foto);
@@ -73,7 +73,7 @@ function createNewFoto(event) {
 function deleteFoto() {
   let fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
 
-  albumArray.forEach(function(foto) {
+  albumArray.forEach(foto => {
     if (foto.id === fotoId) {
       foto.deleteFromStorage(fotoId);
     }
@@ -97,7 +97,7 @@ function enableAddToAlbumBtn() {
 function favoriteFoto() {
   let fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
    
-  albumArray.forEach(function(foto) {
+  albumArray.forEach(foto => {
     if (foto.id === fotoId) {
       foto.favorite = !foto.favorite;
       foto.updatePhoto(foto.title, foto.caption, foto.favorite)
@@ -142,7 +142,7 @@ function postToPage(fotoObj) {
 function repopulateDom() {
   let jsonUserPhotosArray = JSON.parse((localStorage.getItem('userphotos')));
 
-  jsonUserPhotosArray.forEach(function(jsonObj) {
+  jsonUserPhotosArray.forEach(jsonObj => {
     let foto = new Photo(jsonObj.title, jsonObj.caption, jsonObj.file, jsonObj.id, jsonObj.favorite);
     albumArray.push(foto);
     repopulateFavCounter(foto);
@@ -188,13 +188,11 @@ function showsFavsOrAllPhotos(event) {
   document.querySelector('.js-album').innerHTML = '';
 
   if (event.target.innerText === 'View All Photos') {
-    albumArray.forEach(function(foto) {
-      postToPage(foto);
-    });
+    albumArray.forEach(foto => postToPage(foto));
     
     event.target.innerText = `View ${favCounter} Favorites`;
   } else {
-    albumArray.forEach(function(foto) {
+    albumArray.forEach(foto => {
       if (foto.favorite === true) {
         postToPage(foto);
       }
@@ -208,9 +206,7 @@ function showMoreOrLessFotos() {
   document.querySelector('.js-album').innerHTML = '';
 
   if (event.target.innerText === 'Show More') {
-    albumArray.forEach(function(foto){
-      postToPage(foto);
-    });
+    albumArray.forEach(foto => postToPage(foto));
 
     event.target.innerText = 'Show Less';
   } else {
@@ -220,7 +216,7 @@ function showMoreOrLessFotos() {
 }
 
 function showTenPhotos() {
-  albumArray.forEach(function(foto, index, array) {
+  albumArray.forEach((foto, index, array) => {
     if (index >= array.length - 10) {
       postToPage(foto);
     }
@@ -230,14 +226,9 @@ function showTenPhotos() {
 function startSearch() {
   document.querySelector('.js-album').innerHTML = '';
   let searchQuery = retrieveInput('search').value.toLowerCase();
+  let fotosMatchingSearchQuery = albumArray.filter(foto => foto.title.toLowerCase().includes(searchQuery) || foto.caption.toLowerCase().includes(searchQuery));
 
-  let fotosMatchingSearchQuery = albumArray.filter(function(foto) {
-    return foto.title.toLowerCase().includes(searchQuery) || foto.caption.toLowerCase().includes(searchQuery);
-  });
-
-  fotosMatchingSearchQuery.forEach(function(foto) {
-    postToPage(foto);
-  });
+  fotosMatchingSearchQuery.forEach(foto => postToPage(foto));
 }
 
 function toggleButtonActiveStatus() {
@@ -247,7 +238,7 @@ function toggleButtonActiveStatus() {
 function updateCaption() {
   let fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
 
-  albumArray.forEach(function(foto) {
+  albumArray.forEach(foto => {
     if (foto.id === fotoId) {
       foto.updatePhoto(event.target.previousElementSibling.previousElementSibling.innerHTML, event.target.innerHTML, foto.favorite);
       foto.saveToStorage(albumArray);
@@ -258,7 +249,7 @@ function updateCaption() {
 function updateTitle() {
   let fotoId = parseInt(event.target.closest('.js-foto').dataset.fotoid);
 
-  albumArray.forEach(function(foto) {
+  albumArray.forEach(foto => {
     if (foto.id === fotoId) {
       foto.updatePhoto(event.target.innerHTML, event.target.nextElementSibling.nextElementSibling.innerHTML, foto.favorite);
       foto.saveToStorage(albumArray);
