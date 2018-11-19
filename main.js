@@ -189,7 +189,6 @@ function showsFavsOrAllPhotos(event) {
 
   if (event.target.innerText === 'View All Photos') {
     albumArray.forEach(foto => postToPage(foto));
-    
     event.target.innerText = `View ${favCounter} Favorites`;
   } else {
     albumArray.forEach(foto => {
@@ -207,7 +206,6 @@ function showMoreOrLessFotos() {
 
   if (event.target.innerText === 'Show More') {
     albumArray.forEach(foto => postToPage(foto));
-
     event.target.innerText = 'Show Less';
   } else {
     showTenPhotos();

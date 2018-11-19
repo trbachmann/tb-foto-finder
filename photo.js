@@ -13,7 +13,7 @@ class Photo {
   }
 
   deleteFromStorage(fotoId) {
-    let newalbumArray = albumArray.filter(function(fotoInst) {
+    let newalbumArray = albumArray.filter(fotoInst => {
       if (fotoInst.id !== fotoId) {
         return fotoInst;
       }
